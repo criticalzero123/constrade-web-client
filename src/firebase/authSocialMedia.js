@@ -9,7 +9,7 @@ const socialMediaAuth = () => {
       return res.user;
     })
     .catch((err) => {
-      return err;
+      console.log(err);
     });
 };
 
