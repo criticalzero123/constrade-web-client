@@ -3,6 +3,8 @@ import useCommentPost from "../../hooks/community/useCommentPost";
 import { Link } from "react-router-dom";
 import { useUserInfo } from "../../hooks/useUserInfo";
 import { Spinner } from "flowbite-react";
+import useReport from "../../hooks/useReport";
+import { ReportEnum } from "../../utilities/enums";
 const CommentCard = ({ communityId, showComment, post, currentMember }) => {
   const [
     commentPost,
@@ -15,7 +17,7 @@ const CommentCard = ({ communityId, showComment, post, currentMember }) => {
   const { user, person } = useUserInfo();
   const [comment, setComment] = useState("");
   const [commentLoading, setCommentLoading] = useState(false);
-
+  const { reportById } = useReport();
   const [editModeInfo, setEditModeInfo] = useState({
     active: false,
     commentInfo: null,
@@ -108,7 +110,7 @@ const CommentCard = ({ communityId, showComment, post, currentMember }) => {
             commentList.map((comment, index) => (
               <div key={index}>
                 <div className="flex gap-x-2 items-center">
-                  {comment.userInfo.user.userId === user.userId && (
+                  {comment.userInfo.user.userId === user.userId ? (
                     <div>
                       <button
                         onClick={() =>
@@ -126,6 +128,20 @@ const CommentCard = ({ communityId, showComment, post, currentMember }) => {
                         className="ml-4"
                       >
                         edit
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                      <button
+                        onClick={() =>
+                          reportById(
+                            currentMember.userId,
+                            comment.comment.communityPostCommentId,
+                            ReportEnum.CommunityPostComment
+                          )
+                        }
+                      >
+                        report
                       </button>
                     </div>
                   )}

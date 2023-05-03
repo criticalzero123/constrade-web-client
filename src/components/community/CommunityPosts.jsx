@@ -6,7 +6,7 @@ import useCommentPost from "../../hooks/community/useCommentPost";
 import { Spinner } from "flowbite-react";
 import Swal from "sweetalert2";
 import EditPostCommunity from "./EditPostCommunity";
-
+import useReport from "../../hooks/useReport";
 const CommunityPosts = ({ cid, currentMember }) => {
   const { user, person } = useUserInfo();
   const [postInput, setPostInput] = useState("");
@@ -22,6 +22,7 @@ const CommunityPosts = ({ cid, currentMember }) => {
   );
   const [showComment, setShowComment] = useState(-1);
   const [, getComments] = useCommentPost(cid);
+  const { reportById } = useReport();
 
   const handlePost = async (e) => {
     e.preventDefault();
@@ -145,6 +146,7 @@ const CommunityPosts = ({ cid, currentMember }) => {
             showComment={showComment}
             onDeletePost={onDeletePost}
             setPostEditValue={handleEdit}
+            reportById={reportById}
           />
         ))}
       </div>

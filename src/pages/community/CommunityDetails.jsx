@@ -8,6 +8,8 @@ import useCommunity from "../../hooks/community/useCommunity";
 import CommunityPosts from "../../components/community/CommunityPosts";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import { ReportEnum } from "../../utilities/enums";
+import { reportCommunity } from "../../redux/action/communityAction";
 
 const CommunityDetails = () => {
   const { cid } = useParams();
@@ -51,6 +53,22 @@ const CommunityDetails = () => {
     });
   };
 
+  const onReport = async () => {
+    const info = {
+      reportedBy: user.userId,
+      idReported: cid,
+      reportType: ReportEnum.Community,
+      description: "Something description",
+      dateSubmitted: new Date(),
+    };
+    const res = await reportCommunity(info);
+    if (res) {
+      Swal.fire("Reported!", "Your report has been received!", "success");
+    } else {
+      alert("Error in reporting");
+    }
+  };
+
   return (
     <div className="container px-4">
       <div>
@@ -88,13 +106,17 @@ const CommunityDetails = () => {
           </div>
         )}
         <div className="mt-10"></div>
-        {user.userId === data.community.ownerUserId && (
+        {user.userId === data.community.ownerUserId ? (
           <div>
             <button onClick={handleDeleteCommunity}>DELETE COMMUNITY</button>
             <br />
             <Link to={`/community/details/${cid}/edit`} state={data.community}>
               EDIT COMMUNITY
             </Link>
+          </div>
+        ) : (
+          <div>
+            <button onClick={onReport}>REPORT COMMUNITY</button>
           </div>
         )}
         <div className="mt-10"></div>

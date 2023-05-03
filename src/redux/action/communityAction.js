@@ -60,18 +60,12 @@ export const deleteCommunity = async (id, userId) => {
   }
 };
 
-export const reportCommunity = (info) => async (dispatch) => {
-  dispatch({ type: "REPORT_COMMUNITY_REQUEST" });
-
+export const reportCommunity = async (info) => {
   try {
     const res = await api.setAuthHeaders().post(`/api/community/report`, info);
-    dispatch({
-      type: "REPORT_COMMUNITY_SUCCESS",
-      payload: res.data.responseData,
-    });
-    alert("reported");
+    return res.data.responseData;
   } catch (error) {
-    dispatch({ type: "REPORT_COMMUNITY_FAILED", error: error });
+    console.log(error);
   }
 };
 

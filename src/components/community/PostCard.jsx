@@ -2,7 +2,7 @@ import React from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { GoCommentDiscussion } from "react-icons/go";
 import CommentCard from "./CommentCard";
-import { CommunityRole } from "../../utilities/enums";
+import { CommunityRole, ReportEnum } from "../../utilities/enums";
 const PostCard = ({
   post,
   like,
@@ -13,6 +13,7 @@ const PostCard = ({
   showComment,
   onDeletePost,
   setPostEditValue,
+  reportById,
 }) => {
   return (
     <div className="shadow-lg my-4">
@@ -52,6 +53,21 @@ const PostCard = ({
                 }}
               >
                 Edit
+              </button>
+            )}
+          </div>
+          <div>
+            {post.communityPost.posterUserId !== currentMember.userId && (
+              <button
+                onClick={() =>
+                  reportById(
+                    currentMember.userId,
+                    post.communityPost.communityPostId,
+                    ReportEnum.CommunityPost
+                  )
+                }
+              >
+                Report
               </button>
             )}
           </div>
