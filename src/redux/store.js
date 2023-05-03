@@ -2,10 +2,58 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
-import { userInfoReducer } from "./reducer/userReducer";
+import { userInfoReducer, getUserByIdReducer } from "./reducer/userReducer";
+import { followCountReducer } from "./reducer/followReducer";
+import { getMessagesByUserIdsReducer } from "./reducer/userMessageReducer";
+import {
+  getProductMessagesReducer,
+  getProductChatByUserIdReducer,
+} from "./reducer/productMessageReducer";
+
+import {
+  getProductByUserReducer,
+  getProductByIdReducer,
+  getFavoriteByUserIdReducer,
+} from "./reducer/productReducer";
+
+import {
+  getMyCommunityReducer,
+  getCommunityByIdReducer,
+  getAllCommunityReducer,
+  getCommentPostReducer,
+  getCommunityMembersReducer,
+  getAllMyCommunityJoinedReducer,
+  getPopularCommunityReducer,
+  communityData,
+} from "./reducer/communityReducer";
+
+import {
+  getOtherReviewsUserReducer,
+  getMyReviewsUserReducer,
+  getNotRatedReducer,
+} from "./reducer/reviewReducer";
 
 const finalReducer = combineReducers({
   userInfoReducer,
+  followCountReducer,
+  getMessagesByUserIdsReducer,
+  getProductMessagesReducer,
+  getProductChatByUserIdReducer,
+  getProductByUserReducer,
+  getProductByIdReducer,
+  getFavoriteByUserIdReducer,
+  getMyCommunityReducer,
+  getCommunityByIdReducer,
+  getAllCommunityReducer,
+  getCommentPostReducer,
+  getCommunityMembersReducer,
+  getAllMyCommunityJoinedReducer,
+  getPopularCommunityReducer,
+  communityData,
+  getUserByIdReducer,
+  getOtherReviewsUserReducer,
+  getMyReviewsUserReducer,
+  getNotRatedReducer,
 });
 
 const currentUser = localStorage.getItem("currentUser")

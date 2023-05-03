@@ -6,31 +6,30 @@ const createApi = () => {
     timeout: 5000,
   });
 
-  //Authorized  actions
-  // const setAuthHeaders = async () => {
-  // const apiKey = await getApiKey();
-  // const token = await getToken();
-  // api.defaults.headers.common["ApiKey"] = apiKey;
-  // api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  // };
+  const setAuthHeaders = async () => {
+    const apiKey = JSON.parse(localStorage.getItem("ApiKey"));
+    const token = JSON.parse(localStorage.getItem("Authorization"));
+    api.defaults.headers.common["ApiKey"] = apiKey;
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  };
 
   return {
     setAuthHeaders: () => {
       return {
         get: async (url, config) => {
-          // await setAuthHeaders();
+          await setAuthHeaders();
           return api.get(url, config);
         },
         post: async (url, data, config) => {
-          // await setAuthHeaders();
+          await setAuthHeaders();
           return api.post(url, data, config);
         },
         put: async (url, data, config) => {
-          // await setAuthHeaders();
+          await setAuthHeaders();
           return api.put(url, data, config);
         },
         delete: async (url, config) => {
-          // await setAuthHeaders();
+          await setAuthHeaders();
           return api.delete(url, config);
         },
       };

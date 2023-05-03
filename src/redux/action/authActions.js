@@ -1,3 +1,4 @@
+import { signOutEmailPassword } from "../../firebase/authSocialMedia";
 import api from "../../utilities/api";
 
 export const googleAuthLogin = async (email) => {
@@ -60,4 +61,16 @@ export const verifyOtp = async (email, code) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const logoutUser = () => (dispatch) => {
+  dispatch({ type: "USER_SIGN_OUT" });
+  signOutEmailPassword(removeAndRedirect);
+};
+
+const removeAndRedirect = () => {
+  localStorage.removeItem("currentUser");
+  localStorage.removeItem("Authorization");
+  localStorage.removeItem("ApiKey");
+  window.location.href = "/login";
 };

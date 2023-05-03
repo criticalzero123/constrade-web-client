@@ -13,4 +13,16 @@ const socialMediaAuth = () => {
     });
 };
 
+export const signOutEmailPassword = (callback) => {
+  return firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      callback();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export default socialMediaAuth;

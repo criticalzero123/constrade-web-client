@@ -14,9 +14,9 @@ export const useGoogleAuth = () => {
     const exist = await googleAuthLogin(res.email);
 
     if (exist) {
+      dispatch(getUserInfo(exist.user));
       localStorage.setItem("ApiKey", JSON.stringify(exist.apiKey));
       localStorage.setItem("Authorization", JSON.stringify(exist.token));
-      dispatch(getUserInfo(exist.user));
 
       window.location.href = "/discover";
     } else {
