@@ -4,10 +4,10 @@ import useCommunityMembers from "../../hooks/community/useCommunityMembers";
 import { Link } from "react-router-dom";
 import { MdPersonRemoveAlt1 } from "react-icons/md";
 import { CommunityRole } from "../../utilities/enums";
-const MembersModal = ({ show, onClose, cid, currentMember }) => {
+const MembersModal = ({ show, onClose, cid, currentMember, user }) => {
   const [members, removeMember] = useCommunityMembers(cid);
   if (members === undefined) return <p>Loading...</p>;
-
+  console.log(members);
   return (
     <Modal show={show} onClose={onClose}>
       <Modal.Header>Community Members</Modal.Header>
@@ -21,14 +21,14 @@ const MembersModal = ({ show, onClose, cid, currentMember }) => {
                   alt={index}
                   className="w-10 h-10 rounded-full cursor-pointer"
                   onClick={() => {
-                    if (currentMember.userId !== member.member.userId) {
+                    if (user.userId !== member.member.userId) {
                       window.location.href = `/users/o/${member.member.userId}`;
                     }
                   }}
                 />
                 <Link
                   to={
-                    currentMember.userId !== member.member.userId &&
+                    user.userId !== member.member.userId &&
                     `/users/o/${member.member.userId}`
                   }
                   className="capitalize"

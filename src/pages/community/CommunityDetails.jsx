@@ -127,6 +127,7 @@ const CommunityDetails = () => {
         show={showMembers}
         onClose={() => setShowMembers(false)}
         currentMember={currentMember}
+        user={user}
       />
     </div>
   );
