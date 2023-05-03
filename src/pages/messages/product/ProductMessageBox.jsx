@@ -20,7 +20,7 @@ const ProductMessageBox = () => {
   const [onDelete, setOnDelete] = useState(false);
   const [showHeader, setShowHeader] = useState(false);
 
-  const [messageData, getMoreMessage, deleteMessage] = useProductMessages(
+  const [messageData, , deleteMessage] = useProductMessages(
     user.userId,
     state.user.userId,
     pid,

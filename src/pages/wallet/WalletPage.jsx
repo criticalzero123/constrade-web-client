@@ -15,6 +15,9 @@ const WalletPage = () => {
         <Link to="/wallet/send" state={wallet}>
           Send Money
         </Link>
+        <Link to="/wallet/topup" state={wallet}>
+          Top up
+        </Link>
       </div>
 
       <div className="col-span-2">

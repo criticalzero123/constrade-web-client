@@ -8,7 +8,7 @@ const ProductBoost = () => {
   const { pid } = useParams();
   const [days, setDays] = useState(0);
   const { user } = useUserInfo();
-  const [newDays, setNewDays] = useState(0);
+  // const [newDays, setNewDays] = useState(0);
   const [data, submit, cancel, loading] = useBoostProduct(pid);
 
   return (

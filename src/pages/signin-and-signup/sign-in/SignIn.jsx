@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import GoogleButtonSignIn from "../../../components/sign-in/GoogleButtonSignIn";
 import { useEmailAuth } from "../../../hooks/useEmailAuth";
 
-import { textWhite, mainColor } from "../../../utilities/colors";
-
 const SignIn = () => {
   const { loginEmail } = useEmailAuth();
   const [email, setEmail] = useState("");

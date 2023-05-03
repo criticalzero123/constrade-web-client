@@ -34,6 +34,7 @@ import EditMyUserProfile from "./pages/user/EditMyUserProfile";
 import CommunityDetails from "./pages/community/CommunityDetails";
 import EditCommunity from "./pages/community/EditCommunity";
 import SendWallet from "./pages/wallet/SendWallet";
+import TopUpWallet from "./pages/wallet/TopUpWallet";
 function App() {
   const { user } = useUserInfo();
 
@@ -80,6 +81,7 @@ function App() {
 
         <Route path="/wallet" element={<WalletPage />} />
         <Route path="/wallet/send" element={<SendWallet />} />
+        <Route path="/wallet/topup" element={<TopUpWallet />} />
         <Route path="/wishlist" element={<WishListPage />} />
 
         <Route path="/messages/p" element={<ProductMessagesList />}>
