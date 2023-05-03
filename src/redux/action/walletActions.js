@@ -21,17 +21,12 @@ export const getAllTransactionWalletUser = async (walletId) => {
   }
 };
 
-export const getAllWalletUser = () => async (dispatch) => {
-  dispatch({ type: "GET_ALL_WALLET_USER_REQUEST" });
-
+export const getAllWalletUser = async () => {
   try {
     const res = await api.setAuthHeaders().get(`/api/wallet/user/all`);
-    dispatch({
-      type: "GET_ALL_WALLET_USER_SUCCESS",
-      payload: res.data.responseData,
-    });
+    return res.data.responseData;
   } catch (error) {
-    dispatch({ type: "GET_ALL_WALLET_USER_FAILED", error: error });
+    console.log(error);
   }
 };
 

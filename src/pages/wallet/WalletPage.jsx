@@ -1,5 +1,6 @@
 import React from "react";
 import { useWallet } from "../../hooks/wallet/useWallet";
+import { Link } from "react-router-dom";
 
 const WalletPage = () => {
   const { wallet, transactionsAll } = useWallet();
@@ -11,7 +12,11 @@ const WalletPage = () => {
     <div className="grid grid-cols-6 px-4 container">
       <div className="col-span-4">
         <h1>Available Amount</h1>₱ {wallet.balance.toFixed(2)}
+        <Link to="/wallet/send" state={wallet}>
+          Send Money
+        </Link>
       </div>
+
       <div className="col-span-2">
         <h3 className="font-semibold text-lg">Transaction</h3>
         {transactionsAll.map((transaction, index) => (

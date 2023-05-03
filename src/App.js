@@ -33,6 +33,7 @@ import ProductBoost from "./pages/product/product-boost/ProductBoost";
 import EditMyUserProfile from "./pages/user/EditMyUserProfile";
 import CommunityDetails from "./pages/community/CommunityDetails";
 import EditCommunity from "./pages/community/EditCommunity";
+import SendWallet from "./pages/wallet/SendWallet";
 function App() {
   const { user } = useUserInfo();
 
@@ -78,6 +79,7 @@ function App() {
         <Route path="/community/add" element={<AddCommunity />} />
 
         <Route path="/wallet" element={<WalletPage />} />
+        <Route path="/wallet/send" element={<SendWallet />} />
         <Route path="/wishlist" element={<WishListPage />} />
 
         <Route path="/messages/p" element={<ProductMessagesList />}>
