@@ -4,11 +4,31 @@ import { useUserInfo } from "../../../hooks/useUserInfo";
 import useGetProductId from "../../../hooks/messages/product/useGetProductId";
 import { BsBookmarkHeartFill } from "react-icons/bs";
 import ProductInfo from "../../../components/messages/product/ProductInfo";
+import { Spinner } from "flowbite-react";
+import { addFavorite } from "../../../redux/action/productActions";
 const ProductDetails = () => {
   const { pid } = useParams();
   const { user } = useUserInfo();
-  const { data } = useGetProductId(pid, user.userId);
+  const { data, isFavorite, setIsFavorite } = useGetProductId(pid, user.userId);
+  const [addingToFav, setAddingToFav] = useState(false);
   const [displayImage, setDisplayImage] = useState(null);
+
+  const favoriteOnClick = async () => {
+    if (user.userId !== data.product.posterUserId) {
+      setAddingToFav(true);
+
+      const info = {
+        productId: data.product.productId,
+        UserId: user.userId,
+        date: new Date(),
+      };
+
+      await addFavorite(info);
+
+      setIsFavorite(!isFavorite);
+      setAddingToFav(false);
+    }
+  };
 
   if (data === undefined) return <p>Loading...</p>;
 
@@ -42,13 +62,17 @@ const ProductDetails = () => {
           {user.userId !== data.product.posterUserId && (
             <div className="absolute top-0 w-full">
               <div className="flex justify-end ">
-                <BsBookmarkHeartFill
-                  size={40}
-                  className={`${
-                    data.isFavorite && "text-red-600"
-                  } text-gray-400 mr-1 hover:cursor-pointer `}
-                  // onClick={favoriteOnClick}
-                />
+                {addingToFav ? (
+                  <Spinner />
+                ) : (
+                  <BsBookmarkHeartFill
+                    size={40}
+                    className={`${
+                      isFavorite && "text-red-600"
+                    } text-gray-400 mr-1 hover:cursor-pointer `}
+                    onClick={favoriteOnClick}
+                  />
+                )}
               </div>
             </div>
           )}

@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { VscSymbolMethod } from "react-icons/vsc";
 const ProductCardDisplay = ({ product }) => {
-  console.log(product);
   return (
     <Link
       to={`/products/details/${product.productId}`}

@@ -9,7 +9,6 @@ import background from "../../../assets/branding/background.png";
 import { QRCodeCanvas } from "qrcode.react";
 const ProductShare = ({ title, description }) => {
   const fullUrl = window.location.href;
-  console.log(fullUrl);
   const exportQrImage = () => {
     const canva = document.getElementById("qrCodePic");
 
