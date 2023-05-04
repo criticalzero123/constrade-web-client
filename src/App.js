@@ -36,6 +36,7 @@ import EditCommunity from "./pages/community/EditCommunity";
 import SendWallet from "./pages/wallet/SendWallet";
 import TopUpWallet from "./pages/wallet/TopUpWallet";
 import TransactionsPage from "./pages/transactions/TransactionsPage";
+import SignUpDetails from "./pages/signin-and-signup/sign-up/SignUpDetails";
 function App() {
   const { user } = useUserInfo();
 
@@ -115,6 +116,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/register" element={<SignUp />} />
+        <Route path="/register/details" element={<SignUpDetails />} />
 
         <Route
           path="*"

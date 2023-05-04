@@ -11,6 +11,16 @@ export const googleAuthLogin = async (email) => {
   }
 };
 
+export const emailAndPasswordRegister = async (userInfo) => {
+  try {
+    const res = await api.post(`/api/auth`, userInfo);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const googleAuthRegister = async (userInfo) => {
   try {
     const res = await api.post(`/api/auth`, userInfo);

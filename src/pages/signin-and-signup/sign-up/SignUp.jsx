@@ -5,37 +5,49 @@ import {
   requestOtpEmail,
   verifyOtp,
 } from "../../../redux/action/authActions";
+import { Spinner } from "flowbite-react";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [success, setSuccess] = useState(false);
+  const [sendingcode, setSendingCode] = useState(false);
+  const [verifyingCode, setVerifyingCode] = useState(false);
+  const [verified, setVerified] = useState(false);
 
   const handleGenerateOtp = async (e) => {
     e.preventDefault();
+    setSendingCode(true);
 
     const emailExist = await checkEmail(email);
 
     if (emailExist) {
       alert("Email already exist");
+      setSendingCode(false);
+
       return;
     }
 
     const sent = await requestOtpEmail(email);
 
     setSuccess(sent);
+    setSendingCode(false);
   };
 
   const handleVerifyOtp = async (e) => {
+    setVerifyingCode(true);
     e.preventDefault();
 
     const isSuccess = await verifyOtp(email, code);
 
     if (isSuccess) {
-      alert("Success");
+      setVerified(isSuccess);
     } else {
       alert("Wrong otp Code");
     }
+
+    setVerifyingCode(false);
   };
 
   return (
@@ -51,7 +63,15 @@ const SignUp = () => {
             onChange={(e) => setCode(e.target.value)}
             className="border p-4"
           />
-          <button>Verifiy</button>
+          {verified ? (
+            <Link to="/register/details" state={email}>
+              Proceed
+            </Link>
+          ) : (
+            <button disabled={verifyingCode}>
+              {verifyingCode ? <Spinner /> : "Verify"}
+            </button>
+          )}
         </form>
       ) : (
         <form onSubmit={handleGenerateOtp}>
@@ -62,7 +82,9 @@ const SignUp = () => {
             onChange={(e) => setEmail(e.target.value)}
             className="border p-4"
           />
-          <button>Send OTP</button>
+          <button disabled={sendingcode}>
+            {sendingcode ? <Spinner /> : "Send OTP"}
+          </button>
         </form>
       )}
     </div>

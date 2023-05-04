@@ -24,6 +24,8 @@ const RecentTransactionItem = ({ data, currentUserWalletId }) => {
         return "Refund";
       case OtherTransactionType.AddCount:
         return "Add Post Count";
+      default:
+        return "";
     }
   };
 
@@ -39,6 +41,8 @@ const RecentTransactionItem = ({ data, currentUserWalletId }) => {
         return true;
       case OtherTransactionType.AddCount:
         return false;
+      default:
+        return "";
     }
   };
 
