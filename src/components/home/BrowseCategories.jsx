@@ -46,8 +46,8 @@ const BrowseCategories = () => {
             placeholder="Search for console games"
             className="border py-2 px-4 w-full rounded focus:shadow-lg "
           />
-          <button className="ml-4 border px-4 bg-gray-100 rounded-lg text-white">
-            <BsSearch className="text-[#CC481F]" />
+          <button className="ml-4 border px-4 bg-gray-100 rounded-lg hover:text-[#CC481F] text-black ">
+            <BsSearch />
           </button>
         </form>
       </div>
