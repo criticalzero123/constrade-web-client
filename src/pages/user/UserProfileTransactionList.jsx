@@ -18,7 +18,7 @@ const UserProfileTransactionList = ({ id }) => {
       {transactions.map((transaction, index) => (
         <Link
           key={index}
-          className="flex items-center gap-x-4 p-4 bg-gray-100 my-3 rounded hover:bg-[#cc471f46] "
+          className="flex items-center gap-x-4 p-4 bg-gray-100 my-3 rounded hover:bg-[#cc471f13] "
         >
           <div>
             <img
@@ -28,16 +28,13 @@ const UserProfileTransactionList = ({ id }) => {
             />
           </div>
           <div>
-            <p
-              numberOfLines={1}
-              className="text-[#CC481F] font-semibold text-base"
-            >
+            <p className="text-[#CC481F] font-semibold text-base">
               {transaction.productName}
             </p>
-            <p numberOfLines={1} className="text-gray-500">
+            <p className="text-gray-500">
               Buyer: {getName(transaction.buyerId, transaction.buyerName)}
             </p>
-            <p numberOfLines={1} className="text-gray-500">
+            <p className="text-gray-500">
               Seller: {getName(transaction.sellerId, transaction.sellerName)}
             </p>
           </div>

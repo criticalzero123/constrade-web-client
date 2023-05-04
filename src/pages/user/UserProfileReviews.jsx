@@ -15,12 +15,12 @@ const UserProfileReviews = () => {
     <div>
       <p>Average Rating: {rate}</p>
 
-      <p>Reviews:</p>
+      <p className="mt-10 mb-2">Reviews:</p>
       <div>
         {otherReview.map((review, index) => (
           <Link
             key={index}
-            className="flex items-center gap-x-3 p-4 bg-gray-200 rounded-lg"
+            className="flex items-center gap-x-3 p-4 bg-gray-100 hover:bg-[#cc471f13]  rounded-lg"
           >
             <div>
               <img
