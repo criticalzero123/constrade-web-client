@@ -192,18 +192,19 @@ const ProductInfo = ({ product, ownerUser, person, isBoosted }) => {
         )}
         <div className="w-full ml-5">
           <ProductShare title={product.title} />
-          {product.posterUserId === user.userId && (
-            <button
-              className="mt-5 text-[#ea8e72] 
+          {product.productStatus !== "sold" &&
+            product.posterUserId === user.userId && (
+              <button
+                className="mt-5 text-[#ea8e72] 
                   border-2 border-[#CC481F]
                     w-full rounded-md p-3 font-semibold text-sm md:text-lg"
-              onClick={() =>
-                (window.location.href = `/products/details/${product.productId}/boost`)
-              }
-            >
-              {isBoosted ? "Boosted" : "Boost"}
-            </button>
-          )}
+                onClick={() =>
+                  (window.location.href = `/products/details/${product.productId}/boost`)
+                }
+              >
+                {isBoosted ? "Boosted" : "Boost"}
+              </button>
+            )}
         </div>
       </div>
     </div>

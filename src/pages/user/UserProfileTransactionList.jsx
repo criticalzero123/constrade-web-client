@@ -19,6 +19,7 @@ const UserProfileTransactionList = ({ id }) => {
         <Link
           key={index}
           className="flex items-center gap-x-4 p-4 bg-gray-100 my-3 rounded hover:bg-[#cc471f13] "
+          to={`/transaction/details/${transaction.productId}`}
         >
           <div>
             <img

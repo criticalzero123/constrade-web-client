@@ -21,6 +21,7 @@ const UserProfileReviews = () => {
           <Link
             key={index}
             className="flex items-center gap-x-3 p-4 bg-gray-100 hover:bg-[#cc471f13]  rounded-lg"
+            to={`/transaction/details/${review.productId}`}
           >
             <div>
               <img
