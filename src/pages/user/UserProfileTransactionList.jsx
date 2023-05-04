@@ -1,16 +1,47 @@
 import React from "react";
 import useTransaction from "../../hooks/transaction/useTransaction";
+import { Link } from "react-router-dom";
+import { useUserInfo } from "../../hooks/useUserInfo";
 
 const UserProfileTransactionList = ({ id }) => {
   const [transactions] = useTransaction(id);
+  const { user } = useUserInfo();
+  const getName = (id, userName) => {
+    return id === user.userId ? "Me" : userName;
+  };
 
   if (transactions === undefined) return <div>Loading...</div>;
+  if (transactions.length === 0) return <p>No transactions found.</p>;
 
   return (
     <div>
-      <p>Hellowie</p>
       {transactions.map((transaction, index) => (
-        <div key={index}>{transaction.productName}</div>
+        <Link
+          key={index}
+          className="flex items-center gap-x-4 p-4 bg-gray-100 my-3 rounded hover:bg-[#cc471f46] "
+        >
+          <div>
+            <img
+              src={transaction.productImage}
+              alt="product"
+              className="w-14 h-14 rounded-lg object-cover"
+            />
+          </div>
+          <div>
+            <p
+              numberOfLines={1}
+              className="text-[#CC481F] font-semibold text-base"
+            >
+              {transaction.productName}
+            </p>
+            <p numberOfLines={1} className="text-gray-500">
+              Buyer: {getName(transaction.buyerId, transaction.buyerName)}
+            </p>
+            <p numberOfLines={1} className="text-gray-500">
+              Seller: {getName(transaction.sellerId, transaction.sellerName)}
+            </p>
+          </div>
+        </Link>
       ))}
     </div>
   );

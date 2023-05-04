@@ -3,6 +3,8 @@ import useOtherReview from "../../hooks/review/useOtherReview";
 import useAverageReview from "../../hooks/review/useAverageReview";
 import { useUserInfo } from "../../hooks/useUserInfo";
 import useMyReview from "../../hooks/review/useMyReview";
+import { getStar } from "../../utilities/reviewService";
+import { Link } from "react-router-dom";
 
 const OtherUserProfileReview = ({ id }) => {
   const { user } = useUserInfo();
@@ -16,17 +18,67 @@ const OtherUserProfileReview = ({ id }) => {
   return (
     <div>
       <p>Average Rating: {rate}</p>
-      <p>Other Reviews</p>
-      <div>
-        {otherReview.map((review, index) => (
-          <div key={index}>{review.userName}</div>
-        ))}
-      </div>
-      <div>
-        MyRate:{" "}
-        {myRate.map((review, index) => (
-          <div key={index}>{review.userName}</div>
-        ))}
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <p>Other Reviews:</p>
+          {otherReview.length === 0 ? (
+            <div className="text-[#CC481F]">No other reviews</div>
+          ) : (
+            otherReview.map((review, index) => (
+              <Link
+                key={index}
+                className="flex items-center gap-x-3 p-4 bg-gray-200 rounded-lg"
+              >
+                <div>
+                  <img
+                    src={review.imageUrl}
+                    alt="user"
+                    className="w-14 h-14 rounded-lg"
+                  />
+                </div>
+                <div>
+                  <div className="flex items-center gap-x-2">
+                    <p className="text-black font-semibold">
+                      {review.userName}
+                    </p>
+                    <p className=" flex gap-x-1">{getStar(review.rate)}</p>
+                  </div>
+                  <p className=" text-gray-500">{review.description}</p>
+                  <p className="text-gray-500">
+                    {new Date(review.date).toLocaleDateString()}
+                  </p>
+                </div>
+              </Link>
+            ))
+          )}
+        </div>
+        <div>
+          My reviews:{" "}
+          {myRate.map((review, index) => (
+            <Link
+              key={index}
+              className="flex items-center gap-x-3 p-4 bg-gray-200 rounded-lg"
+            >
+              <div>
+                <img
+                  src={review.imageUrl}
+                  alt="user"
+                  className="w-14 h-14 rounded-lg"
+                />
+              </div>
+              <div>
+                <div className="flex items-center gap-x-2">
+                  <p className="text-black font-semibold">{review.userName}</p>
+                  <p className=" flex gap-x-1">{getStar(review.rate)}</p>
+                </div>
+                <p className=" text-gray-500">{review.description}</p>
+                <p className="text-gray-500">
+                  {new Date(review.date).toLocaleDateString()}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
