@@ -19,8 +19,9 @@ const JustForYou = () => {
 
   if (products.length > 0)
     return (
-      <div>
-        <p>Just for you</p>
+      <div className="mt-10">
+        <p className="font-semibold text-2xl text-gray-800">Featured games</p>
+        <p className="text-sm text-gray-400 mb-6">Just for you!</p>
         <div className="flex flex-wrap gap-x-4">
           {products.map((product, index) => (
             <ProductCardDisplay product={product} key={index} />

@@ -7,7 +7,7 @@ import { CommunityRole } from "../../utilities/enums";
 const MembersModal = ({ show, onClose, cid, currentMember, user }) => {
   const [members, removeMember] = useCommunityMembers(cid);
   if (members === undefined) return <p>Loading...</p>;
-  console.log(members);
+
   return (
     <Modal show={show} onClose={onClose}>
       <Modal.Header>Community Members</Modal.Header>

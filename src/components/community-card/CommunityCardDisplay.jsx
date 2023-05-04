@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useUserInfo } from "../../hooks/useUserInfo";
-
+import { MdPublic } from "react-icons/md";
+import { FiUsers } from "react-icons/fi";
 const CommunityCardDisplay = ({
   community,
   isJoined,
@@ -10,7 +11,7 @@ const CommunityCardDisplay = ({
 }) => {
   const { user } = useUserInfo();
   return (
-    <div className="rounded-lg border bg-gray-200 border-gray-200  hover:drop-shadow-[0_10px_15px_rgba(32,41,65,0.6)] w-1/5">
+    <div className="rounded-lg border bg-gray-100 border-gray-100  hover:drop-shadow-[0_10px_15px_rgba(32,41,65,0.6)] w-1/5">
       <Link to={`/community/details/${community.communityId}`}>
         <div className="h-24 relative">
           <img
@@ -25,15 +26,22 @@ const CommunityCardDisplay = ({
           )}
         </div>
         <div className="p-5">
-          <h6 className="text-lg font-medium tracking-tight font-mono text-black truncate">
+          <h6 className="text-xl font-medium tracking-tight text-black truncate mb-2">
             {community.name}
           </h6>
-          <h6 className="text-md font-medium tracking-tight font-mono text-gray-500 truncate capitalize">
-            {community.visibility} Group
-          </h6>
-          <h6 className="text-md font-medium tracking-tight font-mono text-gray-500 truncate">
-            Members: {community.totalMembers}
-          </h6>
+          <div className="flex items-center gap-x-1 text-gray-400 mb-1">
+            <MdPublic />
+            <h6 className="text-sm ml-2  truncate capitalize tracking-wider">
+              {community.visibility} Group
+            </h6>
+          </div>
+          <div className="flex items-center gap-x-1 text-gray-400 mb-1">
+            <FiUsers />
+            <h6 className="text-sm ml-2 truncate capitalize tracking-wider">
+              {community.totalMembers} members
+            </h6>
+          </div>
+
           <div className="flex items-center mt-5">
             <img
               src={ownerImage}

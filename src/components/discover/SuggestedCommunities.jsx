@@ -21,7 +21,12 @@ const SuggestedCommunities = () => {
   if (community.length > 0)
     return (
       <div>
-        Suggested Communities
+        <p className="font-semibold text-2xl text-gray-800">
+          Top gaming communities
+        </p>
+        <p className="text-sm text-gray-400 mb-6">
+          Join and play with other gamers
+        </p>
         <div className="flex flex-wrap gap-x-4">
           {community.map((comm, index) => (
             <CommunityCardDisplay

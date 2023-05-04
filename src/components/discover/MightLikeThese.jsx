@@ -18,8 +18,11 @@ const MightLikeThese = () => {
 
   if (boosted.length > 0)
     return (
-      <div>
-        <p>Might Like These</p>
+      <div className="mt-10">
+        <p className="font-semibold text-2xl text-gray-800">Might Like These</p>
+        <p className="text-sm text-gray-400 mb-6">
+          Console games that are hot!
+        </p>
         <div className="flex flex-wrap gap-x-4">
           {boosted.map((product, index) => (
             <ProductCardDisplay product={product} key={index} />
