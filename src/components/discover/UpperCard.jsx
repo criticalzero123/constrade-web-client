@@ -33,7 +33,7 @@ const UpperCard = () => {
               </Link>
               <button
                 onClick={() =>
-                  window.open("https://youtu.be/krJDLQmHLWw", "_blank")
+                  window.open("https://youtu.be/GxKvyxkDmSo", "_blank")
                 }
                 className="py-3 mt-5 sm:mt-0 px-6   h-fit rounded-lg flex place-items-center bg-[#051632] text-white  font-poppins hover:text-orange-400"
               >

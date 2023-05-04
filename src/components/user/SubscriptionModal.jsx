@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { subscribeUser } from "../../redux/action/subscriptionAction";
 import { useUserInfo } from "../../hooks/useUserInfo";
 import { getUserInfo } from "../../redux/action/userActions";
+import Swal from "sweetalert2";
 
 const SubscriptionModal = ({ show, onClose }) => {
   const [loading, setLoading] = useState(false);
@@ -26,11 +27,12 @@ const SubscriptionModal = ({ show, onClose }) => {
           },
         };
 
+        Swal.fire("Success!", `You are now a premium member.`, "success");
         dispatch(getUserInfo({ user: userInfo.user, person: userInfo.person }));
         onClose();
         return true;
       } else {
-        alert(res);
+        Swal.fire("Warning!", `${res}.`, "warning");
       }
     } else {
       alert("Something went wrong in subscribing");

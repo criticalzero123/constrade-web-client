@@ -9,8 +9,8 @@ const WishListPage = () => {
 
   if (list.length === 0)
     return (
-      <div>
-        <p>Add items to display here...</p>
+      <div className="container px-4">
+        <p>Like some items to display here...</p>
       </div>
     );
 

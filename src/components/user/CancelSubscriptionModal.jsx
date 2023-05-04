@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { cancelSubscription } from "../../redux/action/subscriptionAction";
 import { useUserInfo } from "../../hooks/useUserInfo";
 import { getUserInfo } from "../../redux/action/userActions";
+import Swal from "sweetalert2";
 
 const CancelSubscriptionModal = ({ show, onClose }) => {
   const [loading, setLoading] = useState(false);
@@ -24,7 +25,7 @@ const CancelSubscriptionModal = ({ show, onClose }) => {
           ...person,
         },
       };
-
+      Swal.fire("Success!", `Cancelling subscription successfully.`, "success");
       dispatch(getUserInfo({ user: userInfo.user, person: userInfo.person }));
       onClose();
     } else {

@@ -13,3 +13,11 @@ export const ReportEnum = {
   CommunityPost: 3,
   CommunityPostComment: 4,
 };
+
+export const OtherTransactionType = {
+  Topup: 0,
+  Boost: 1,
+  Subscribe: 2,
+  Refund: 3,
+  AddCount: 4,
+};
