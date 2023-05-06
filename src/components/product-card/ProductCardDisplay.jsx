@@ -14,15 +14,15 @@ const ProductCardDisplay = ({ product }) => {
           alt={product.productId}
         />
       </div>
-      <div className="mt-5 flex gap-x-2 items-center">
-        <div>
+      <div className="mt-5 grid grid-cols-3 gap-x-2 items-center  w-full">
+        <div className="w-full col-span-1">
           <img
             src={product.userImage}
             alt={product.userName}
             className="w-16 h-16 rounded-lg object-cover shadow-lg"
           />
         </div>
-        <div>
+        <div className="w-full col-span-2">
           <h6 className="text-lg font-medium tracking-tight text-black truncate">
             {product.productName}
           </h6>
