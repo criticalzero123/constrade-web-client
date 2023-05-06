@@ -167,7 +167,12 @@ const CommunityDetails = () => {
                 </div>
               ) : (
                 <div>
-                  <button onClick={onReport}>REPORT COMMUNITY</button>
+                  <button
+                    onClick={onReport}
+                    className="w-full border py-3 rounded-lg text-[#CC481F] border-[#CC481F]"
+                  >
+                    REPORT COMMUNITY
+                  </button>
                 </div>
               )}
             </div>

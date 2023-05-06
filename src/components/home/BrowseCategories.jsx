@@ -4,13 +4,22 @@ import { GiTrade } from "react-icons/gi";
 import { AiOutlineSwap } from "react-icons/ai";
 import { HiCash } from "react-icons/hi";
 import { BsSearch } from "react-icons/bs";
+import { getMatchProductSearch } from "../../redux/action/homeActions";
 const BrowseCategories = () => {
   const [query, setQuery] = useState("");
 
-  const handleSearchProduct = (e) => {
+  const handleSearchProduct = async (e) => {
     e.preventDefault();
     if (query.trim() === "") return;
-    window.location.href = `/search/products/${query}`;
+    const res = await getMatchProductSearch(query);
+
+    if (res === "genre") {
+      window.location.href = `/search/products/genre/${query}`;
+    } else if (res === "platform") {
+      window.location.href = `/search/products/platform/${query}`;
+    } else {
+      window.location.href = `/search/products/${query}`;
+    }
   };
   return (
     <div className="my-10 flex justify-between">

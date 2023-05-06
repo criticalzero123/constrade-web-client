@@ -80,6 +80,18 @@ export const getCommunityPopular = async (userId) => {
   }
 };
 
+export const getMatchProductSearch = async (text) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/products/search/match?text=${text}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getCommunity = async (userId) => {
   try {
     const res = await api
