@@ -28,6 +28,16 @@ export const submitIdRequest = async (info) => {
   }
 };
 
+export const getUserType = async (userId) => {
+  try {
+    const res = await api.setAuthHeaders().get(`api/users/type/${userId}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const updatePersonInfo = async (personInfo) => {
   try {
     const result = await api

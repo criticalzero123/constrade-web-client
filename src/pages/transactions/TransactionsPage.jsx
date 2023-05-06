@@ -36,7 +36,9 @@ const TransactionsPage = () => {
           className={`capitalize font-semibold ${isTitle && "text-[#CC481F]"} ${
             isTitle && "cursor-pointer"
           }`}
-          onClick={isTitle && onPressTitle}
+          onClick={() => {
+            if (isTitle) onPressTitle();
+          }}
         >
           {rightText}
         </p>

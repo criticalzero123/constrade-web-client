@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useUserInfo } from "../../hooks/useUserInfo";
-import { Card, Tabs } from "flowbite-react";
+import { Card, Spinner, Tabs } from "flowbite-react";
 
 import { AiFillStar } from "react-icons/ai";
 import { GrTransaction } from "react-icons/gr";
@@ -12,12 +12,41 @@ import SubscriptionModal from "../../components/user/SubscriptionModal";
 import VerificationModal from "../../components/user/VerificationModal";
 import CancelSubscriptionModal from "../../components/user/CancelSubscriptionModal";
 import { AiOutlineEdit } from "react-icons/ai";
+import { getUserInfo, getUserType } from "../../redux/action/userActions";
+import { useDispatch } from "react-redux";
+import ShowFollowedUsersModal from "../../components/user/ShowFollowedUsersModal";
+import ShowFollowerUsersModal from "../../components/user/ShowFollowerUsersModal";
 const MyUserProfile = () => {
   const { user, person } = useUserInfo();
   const [show, setShow] = useState(false);
   const [showCancelSub, setShowCancelSub] = useState(false);
   const [showVerification, setShowVerification] = useState(false);
   const [data] = useUserFollowAndFollowers(user.userId);
+  const dispatch = useDispatch();
+  const [userType, setUserType] = useState("");
+  const [showFollower, setShowFollower] = useState(false);
+  const [showFollowed, setShowFollowed] = useState(false);
+
+  useEffect(() => {
+    if (user === undefined) return;
+    const fetch = async () => {
+      const res = await getUserType(user.userId);
+
+      if (res) {
+        const newUserInfo = {
+          user: { ...user, userType: res },
+          person: { ...person },
+        };
+        dispatch(
+          getUserInfo({ user: newUserInfo.user, person: newUserInfo.person })
+        );
+
+        setUserType(res);
+      }
+    };
+
+    fetch();
+  }, [dispatch]);
 
   return (
     <div className="container px-4">
@@ -33,7 +62,9 @@ const MyUserProfile = () => {
                 />
                 <div className="text-sm flex text-gray-500 dark:text-gray-400 mb-2">
                   <MdVerified size={20} color={"orange"} className="mr-1" />
-                  <p className="capitalize">{user.userType}</p>
+                  <p className="capitalize">
+                    {userType === "" ? <Spinner /> : userType}
+                  </p>
                 </div>
                 <h5 className="mb-1 text-xl flex text-center font-medium text-gray-900 dark:text-white capitalize items-center">
                   {person.firstName} {person.lastName}{" "}
@@ -52,7 +83,10 @@ const MyUserProfile = () => {
                     </div>
 
                     <div className="w-full  flex justify-center">
-                      <p className="text-gray-500 hover:text-orange-500  max-w-fit">
+                      <p
+                        className="text-gray-500 hover:text-orange-500  max-w-fit cursor-pointer"
+                        onClick={() => setShowFollower(true)}
+                      >
                         {data ? data.followCount : 0}
                       </p>
                     </div>
@@ -63,7 +97,10 @@ const MyUserProfile = () => {
                     </div>
 
                     <div className="w-full  flex justify-center">
-                      <p className="text-gray-500 hover:text-orange-500  max-w-fit">
+                      <p
+                        className="text-gray-500 hover:text-orange-500  max-w-fit cursor-pointer"
+                        onClick={() => setShowFollowed(true)}
+                      >
                         {data ? data.followedCount : 0}
                       </p>
                     </div>
@@ -121,6 +158,16 @@ const MyUserProfile = () => {
       <VerificationModal
         show={showVerification}
         onClose={() => setShowVerification(false)}
+      />
+      <ShowFollowedUsersModal
+        userId={user.userId}
+        show={showFollowed}
+        onClose={() => setShowFollowed(false)}
+      />
+      <ShowFollowerUsersModal
+        userId={user.userId}
+        show={showFollower}
+        onClose={() => setShowFollower(false)}
       />
     </div>
   );

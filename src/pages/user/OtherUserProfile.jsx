@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router";
 import useGetUserById from "../../hooks/useGetUserById";
 import { useUserInfo } from "../../hooks/useUserInfo";
@@ -13,11 +13,15 @@ import FollowUserProfile from "../../components/user/FollowUserProfile";
 import OtherUserProfileReview from "./OtherUserProfileReview";
 import UserProfileTransactionList from "../../pages/user/UserProfileTransactionList";
 import OtherUserProfileProductList from "../../components/messages/product/OtherUserProfileProductList";
+import ShowFollowedUsersModal from "../../components/user/ShowFollowedUsersModal";
+import ShowFollowerUsersModal from "../../components/user/ShowFollowerUsersModal";
 const OtherUserProfile = () => {
   const { uid } = useParams();
   const { user } = useUserInfo();
   const [otherUser] = useGetUserById(uid);
   const [data] = useUserFollowAndFollowers(uid);
+  const [showFollower, setShowFollower] = useState(false);
+  const [showFollowed, setShowFollowed] = useState(false);
 
   if (otherUser === undefined || data === undefined) return <p>Loading...</p>;
 
@@ -48,7 +52,10 @@ const OtherUserProfile = () => {
                     </div>
 
                     <div className="w-full  flex justify-center">
-                      <p className="text-gray-500 hover:text-orange-500  max-w-fit">
+                      <p
+                        className="text-gray-500 hover:text-orange-500  max-w-fit cursor-pointer"
+                        onClick={() => setShowFollowed(true)}
+                      >
                         {data ? data.followedCount : 0}
                       </p>
                     </div>
@@ -59,7 +66,10 @@ const OtherUserProfile = () => {
                     </div>
 
                     <div className="w-full  flex justify-center">
-                      <p className="text-gray-500 hover:text-orange-500  max-w-fit">
+                      <p
+                        className="text-gray-500 hover:text-orange-500  max-w-fit cursor-pointer"
+                        onClick={() => setShowFollower(true)}
+                      >
                         {data ? data.followCount : 0}
                       </p>
                     </div>
@@ -97,6 +107,16 @@ const OtherUserProfile = () => {
           </Tabs.Group>
         </div>
       </div>
+      <ShowFollowedUsersModal
+        userId={otherUser.user.userId}
+        show={showFollowed}
+        onClose={() => setShowFollowed(false)}
+      />
+      <ShowFollowerUsersModal
+        userId={otherUser.user.userId}
+        show={showFollower}
+        onClose={() => setShowFollower(false)}
+      />
     </div>
   );
 };

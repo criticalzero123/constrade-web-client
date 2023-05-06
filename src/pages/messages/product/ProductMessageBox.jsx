@@ -93,10 +93,7 @@ const ProductMessageBox = () => {
         const flag = await markAsSoldProduct(info);
 
         if (parseInt(flag) !== -1) {
-          // navigation.navigate("TransactionDetails", {
-          //   id: product.productId,
-          // });
-          alert("Transaction success");
+          window.location.href = `/transaction/details/${pid}`;
         }
 
         return;
