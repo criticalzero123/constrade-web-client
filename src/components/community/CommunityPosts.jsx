@@ -119,17 +119,17 @@ const CommunityPosts = ({ cid, currentMember }) => {
   if (posts === undefined) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className="px-4 py-6">
       {currentMember && (
         <form onSubmit={handlePost} className="flex gap-x-2">
           <input
             type="text"
             value={postInput}
             onChange={(e) => setPostInput(e.target.value)}
-            placeholder="Post something here..."
+            placeholder="Share something..."
             className="p-2 border border-gray-300 rounded"
           />
-          <button className="px-4 py-2 border border-blue-500 rounded-lg">
+          <button className="px-4 py-2 border border-[#CC481F] text-[#CC481F] rounded-lg hover:bg-[#CC481F] hover:text-white">
             {postLoading ? <Spinner /> : "Post"}
           </button>
         </form>

@@ -70,57 +70,87 @@ const CommunityDetails = () => {
   };
 
   return (
-    <div className="container px-4">
-      <div>
-        <img
-          src={data.community.imageUrl}
-          alt="mountain"
-          className="rounded h-[25vh] w-full object-cover"
-        />
-        <h1 className="font-bold text-2xl">{data.community.name}</h1>
-        <h3 className="text-lg">{data.community.description}</h3>
-        <div className="flex gap-x-2 items-center">
-          <img
-            src={data.owner.user.imageUrl}
-            alt="owner"
-            className="w-10 h-10 rounded-full"
-          />
-          <h3 className="text-md">
-            Owned by: {data.owner.person.firstName} {data.owner.person.lastName}
-          </h3>
+    <div className="container px-4 bg-gray-100 ">
+      <img
+        src={data.community.imageUrl}
+        alt="mountain"
+        className="rounded h-[25vh] w-full object-cover"
+      />
+      <div className="grid grid-cols-3">
+        <div className="col-span-1 my-6  ">
+          <div className="bg-white px-4 py-6 rounded-lg shadow-lg">
+            <div className="mb-5">
+              {currentMember ? (
+                <div className="border border-[#CC481F] text-center py-2 px-4 text-[#CC481F] font-semibold rounded-lg cursor-pointer w-full ">
+                  Joined
+                </div>
+              ) : (
+                <div
+                  className="bg-[#CC481F] text-center py-2 px-4 max-w-fit text-white font-semibold rounded-lg cursor-pointer "
+                  onClick={handleJoin}
+                >
+                  Join
+                </div>
+              )}
+            </div>
+            <div className="flex justify-between">
+              <div>
+                <h1 className="font-bold text-2xl">{data.community.name}</h1>
+                <h3 className="text-lg text-gray-400">
+                  {data.community.description}
+                </h3>
+              </div>
+              <p className="text-gray-500">
+                Created at{" "}
+                {new Date(data.community.dateCreated).toLocaleDateString()}
+              </p>
+            </div>
+            <div className="flex gap-x-2 items-center">
+              <p>Owned by:</p>
+              {/* <img
+              src={data.owner.user.imageUrl}
+              alt="owner"
+              className="w-10 h-10 rounded-full"
+            /> */}
+              <Link
+                className="text-md hover:text-[#CC481F]"
+                to={`/users/o/${data.owner.user.userId}`}
+              >
+                {data.owner.person.firstName} {data.owner.person.lastName}
+              </Link>
+            </div>
+            <div className="mt-4"></div>
+            <Button onClick={() => setShowMembers(true)}>Show Members</Button>
+
+            <div className="mt-20">
+              {user.userId === data.community.ownerUserId ? (
+                <div className="grid grid-cols-2 gap-x-4">
+                  <button
+                    onClick={handleDeleteCommunity}
+                    className="w-full py-3 text-center border border-[#CC481F] rounded text-[#CC481F] hover:bg-[#CC481F] hover:text-white"
+                  >
+                    Delete Community
+                  </button>
+                  <Link
+                    to={`/community/details/${cid}/edit`}
+                    state={data.community}
+                  >
+                    <p className="py-3 text-center  border border-[#CC481F] rounded text-[#CC481F] hover:bg-[#CC481F] hover:text-white">
+                      Edit Community
+                    </p>
+                  </Link>
+                </div>
+              ) : (
+                <div>
+                  <button onClick={onReport}>REPORT COMMUNITY</button>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-        <Button onClick={() => setShowMembers(true)}>Show Members</Button>
-        <p>
-          Created at {new Date(data.community.dateCreated).toLocaleDateString()}
-        </p>
-        {currentMember ? (
-          <div className="border border-[#CC481F] text-center py-2 px-4 max-w-fit text-[#CC481F] font-semibold rounded-lg cursor-pointer ">
-            Joined
-          </div>
-        ) : (
-          <div
-            className="bg-[#CC481F] text-center py-2 px-4 max-w-fit text-white font-semibold rounded-lg cursor-pointer "
-            onClick={handleJoin}
-          >
-            Join
-          </div>
-        )}
-        <div className="mt-10"></div>
-        {user.userId === data.community.ownerUserId ? (
-          <div>
-            <button onClick={handleDeleteCommunity}>DELETE COMMUNITY</button>
-            <br />
-            <Link to={`/community/details/${cid}/edit`} state={data.community}>
-              EDIT COMMUNITY
-            </Link>
-          </div>
-        ) : (
-          <div>
-            <button onClick={onReport}>REPORT COMMUNITY</button>
-          </div>
-        )}
-        <div className="mt-10"></div>
-        <CommunityPosts cid={cid} currentMember={currentMember} />
+        <div className="col-span-2">
+          <CommunityPosts cid={cid} currentMember={currentMember} />
+        </div>
       </div>
       <MembersModal
         cid={cid}

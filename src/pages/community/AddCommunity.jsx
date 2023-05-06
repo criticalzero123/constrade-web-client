@@ -64,7 +64,9 @@ const AddCommunity = () => {
             <option value="public" label="Public">
               Public
             </option>
-            {/* <option value="private" label="private" >private</option> */}
+            {/* <option value="private" label="Private">
+              Private
+            </option> */}
           </select>
           <br />
           <button className="text-center w-full bg-[#CC481F] text-white my-4 py-3 rounded">

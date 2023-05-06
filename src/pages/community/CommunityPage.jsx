@@ -42,7 +42,11 @@ const CommunityPage = () => {
         <UpperCardCommunity />
 
         <p className="font-semibold text-2xl text-gray-800">My Communities</p>
-        <p className="text-sm text-gray-400 mb-6">Communities you joined.</p>
+        <p className="text-sm text-gray-400 mb-6">
+          {joined.length === 0
+            ? "You got no communities. Joined from others instead"
+            : "Communities you joined."}
+        </p>
 
         <div className="flex flex-wrap gap-x-4">
           {joined.map((comm, index) => (

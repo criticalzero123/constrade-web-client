@@ -5,6 +5,11 @@ import { useUserInfo } from "../../hooks/useUserInfo";
 import { Spinner } from "flowbite-react";
 import useReport from "../../hooks/useReport";
 import { ReportEnum } from "../../utilities/enums";
+import { RiSendPlaneFill } from "react-icons/ri";
+
+import { MdOutlineDeleteForever } from "react-icons/md";
+import { FiEdit } from "react-icons/fi";
+
 const CommentCard = ({ communityId, showComment, post, currentMember }) => {
   const [
     commentPost,
@@ -93,72 +98,96 @@ const CommentCard = ({ communityId, showComment, post, currentMember }) => {
   };
 
   return (
-    <div>
+    <div className="py-4 px-2">
       {showComment === post.communityPost.communityPostId && commentList && (
         <div>
-          <input
-            type="text"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            placeholder="Comment here...."
-            className="rounded p-2"
-          />
-          <button onClick={onPressComment}>
-            {commentLoading ? <Spinner /> : "send"}
-          </button>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              onPressComment();
+            }}
+          >
+            <input
+              type="text"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="Comment here...."
+              className="rounded p-2"
+            />
+            <button disabled={commentLoading}>
+              {commentLoading ? (
+                <Spinner />
+              ) : (
+                <RiSendPlaneFill size={20} className="ml-2" color={"gray"} />
+              )}
+            </button>
+          </form>
           {commentList.length > 0 &&
             commentList.map((comment, index) => (
-              <div key={index}>
-                <div className="flex gap-x-2 items-center">
-                  {comment.userInfo.user.userId === user.userId ? (
+              <div key={index} className="p-4 bg-gray-100 my-2 rounded-lg">
+                <div className="flex justify-between">
+                  <div className="flex gap-x-2 items-center">
+                    <img
+                      src={comment.userInfo.user.imageUrl}
+                      alt="user"
+                      className="w-10 h-10 rounded-full"
+                    />
                     <div>
-                      <button
-                        onClick={() =>
-                          onDeleteComment(
-                            comment.comment.communityPostCommentId
-                          )
-                        }
+                      <Link
+                        className="text-gray-400 hover:text-red-500"
+                        to={`/users/o/${comment.userInfo.user.userId}`}
                       >
-                        delete
-                      </button>
-                      <button
-                        onClick={() =>
-                          onPressEdit(comment.comment.comment, comment.comment)
-                        }
-                        className="ml-4"
-                      >
-                        edit
-                      </button>
+                        {comment.userInfo.person.firstName}{" "}
+                        {comment.userInfo.person.lastName}
+                      </Link>
+
+                      <p>{comment.comment.comment}</p>
                     </div>
-                  ) : (
-                    <div>
-                      <button
-                        onClick={() =>
-                          reportById(
-                            currentMember.userId,
-                            comment.comment.communityPostCommentId,
-                            ReportEnum.CommunityPostComment
-                          )
-                        }
-                      >
-                        report
-                      </button>
-                    </div>
-                  )}
-                  <img
-                    src={comment.userInfo.user.imageUrl}
-                    alt="user"
-                    className="w-10 h-10 rounded-full"
-                  />
+                  </div>
+
                   <div>
-                    <Link
-                      className="text-gray-400 hover:text-red-500"
-                      to={`/users/o/${comment.userInfo.user.userId}`}
-                    >
-                      {comment.userInfo.person.firstName}{" "}
-                      {comment.userInfo.person.lastName}
-                    </Link>
-                    <p>{comment.comment.comment}</p>
+                    {comment.userInfo.user.userId === user.userId ? (
+                      <div>
+                        <button
+                          onClick={() =>
+                            onDeleteComment(
+                              comment.comment.communityPostCommentId
+                            )
+                          }
+                        >
+                          <MdOutlineDeleteForever color="maroon" size={25} />
+                        </button>
+                        <button
+                          onClick={() =>
+                            onPressEdit(
+                              comment.comment.comment,
+                              comment.comment
+                            )
+                          }
+                          className="ml-4"
+                        >
+                          <FiEdit
+                            size={20}
+                            color="gray"
+                            className="hover:text-black"
+                          />
+                        </button>
+                      </div>
+                    ) : (
+                      <div>
+                        <button
+                          onClick={() =>
+                            reportById(
+                              currentMember.userId,
+                              comment.comment.communityPostCommentId,
+                              ReportEnum.CommunityPostComment
+                            )
+                          }
+                        >
+                          report
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

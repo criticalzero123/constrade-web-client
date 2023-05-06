@@ -36,8 +36,6 @@ const PersonalMessagesList = () => {
 
   if (data === undefined) return <p>Loading...</p>;
 
-  if (data.length === 0) return <p>No chat logs found...</p>;
-
   return (
     <div className="sm:grid sm:grid-cols-6 sm:gap-4">
       <aside

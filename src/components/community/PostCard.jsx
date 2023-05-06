@@ -3,6 +3,9 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { GoCommentDiscussion } from "react-icons/go";
 import CommentCard from "./CommentCard";
 import { CommunityRole, ReportEnum } from "../../utilities/enums";
+import { MdOutlineDeleteForever } from "react-icons/md";
+import { FiEdit } from "react-icons/fi";
+import { Link } from "react-router-dom";
 const PostCard = ({
   post,
   like,
@@ -16,22 +19,29 @@ const PostCard = ({
   reportById,
 }) => {
   return (
-    <div className="shadow-lg my-4">
+    <div className="shadow-lg my-4 bg-white p-4 rounded-lg">
       <div className="flex justify-between">
-        <div className="flex gap-x-2 items-center">
+        <div className="flex gap-x-2 items-center ">
           <img
             src={post.user.user.imageUrl}
             alt="userPoster"
             className="w-10 h-10 rounded-full "
           />
-          <p>
-            {post.user.person.firstName} {post.user.person.lastName}{" "}
-            {!post.isMember && (
-              <span className="text-gray-300 text-sm">(Removed)</span>
-            )}
-          </p>
+          <div>
+            <div>
+              <Link to={`/users/o/${post.user.user.userId}`}>
+                {post.user.person.firstName} {post.user.person.lastName}{" "}
+              </Link>
+              {!post.isMember && (
+                <span className="text-gray-300 text-sm">(Removed)</span>
+              )}
+            </div>
+            <p className="text-gray-400 text-sm">
+              {new Date(post.communityPost.createdDate).toLocaleDateString()}
+            </p>
+          </div>
         </div>
-        <div className="flex gap-x-2">
+        <div className="flex gap-x-2 items-center">
           <div>
             {currentMember &&
               (post.user.user.userId === currentMember.userId ||
@@ -41,35 +51,37 @@ const PostCard = ({
                     onDeletePost(post.communityPost.communityPostId)
                   }
                 >
-                  DELETE
+                  <MdOutlineDeleteForever color="maroon" size={25} />
                 </button>
               )}
           </div>
           <div>
-            {post.user.user.userId === currentMember.userId && (
-              <button
-                onClick={() => {
-                  setPostEditValue(post);
-                }}
-              >
-                Edit
-              </button>
-            )}
+            {currentMember &&
+              post.user.user.userId === currentMember.userId && (
+                <button
+                  onClick={() => {
+                    setPostEditValue(post);
+                  }}
+                >
+                  <FiEdit size={20} color="gray" className="hover:text-black" />
+                </button>
+              )}
           </div>
           <div>
-            {post.communityPost.posterUserId !== currentMember.userId && (
-              <button
-                onClick={() =>
-                  reportById(
-                    currentMember.userId,
-                    post.communityPost.communityPostId,
-                    ReportEnum.CommunityPost
-                  )
-                }
-              >
-                Report
-              </button>
-            )}
+            {currentMember &&
+              post.communityPost.posterUserId !== currentMember.userId && (
+                <button
+                  onClick={() =>
+                    reportById(
+                      currentMember.userId,
+                      post.communityPost.communityPostId,
+                      ReportEnum.CommunityPost
+                    )
+                  }
+                >
+                  Report
+                </button>
+              )}
           </div>
         </div>
       </div>
