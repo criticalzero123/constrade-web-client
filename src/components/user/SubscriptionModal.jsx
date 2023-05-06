@@ -1,5 +1,5 @@
 import { Button, Modal, Spinner } from "flowbite-react";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { subscribeUser } from "../../redux/action/subscriptionAction";
 import { useUserInfo } from "../../hooks/useUserInfo";
@@ -10,6 +10,12 @@ const SubscriptionModal = ({ show, onClose }) => {
   const [loading, setLoading] = useState(false);
   const { user, person } = useUserInfo();
   const dispatch = useDispatch();
+
+  const documentBodyRef = useRef(null);
+
+  useEffect(() => {
+    documentBodyRef.current = document.body;
+  }, []);
 
   const handleSubscribe = async () => {
     setLoading(true);
@@ -43,7 +49,11 @@ const SubscriptionModal = ({ show, onClose }) => {
   };
   return (
     <>
-      <Modal show={show} onClose={onClose}>
+      <Modal
+        show={show}
+        onClose={onClose}
+        root={documentBodyRef.current ?? undefined}
+      >
         <Modal.Header>Be a subscriber now!</Modal.Header>
         <Modal.Body>
           <div className="space-y-6">

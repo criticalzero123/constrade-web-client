@@ -1,11 +1,22 @@
 import { Modal } from "flowbite-react";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 const ShowWalletModal = ({ show, onClose, wallet }) => {
   const [amount, setAmount] = useState(0);
+
+  const documentBodyRef = useRef(null);
+
+  useEffect(() => {
+    documentBodyRef.current = document.body;
+  }, []);
+
   return (
-    <Modal show={show} onClose={onClose}>
+    <Modal
+      show={show}
+      onClose={onClose}
+      root={documentBodyRef.current ?? undefined}
+    >
       <Modal.Header>Be a subscriber now!</Modal.Header>
       <Modal.Body>
         <div className="space-y-6">

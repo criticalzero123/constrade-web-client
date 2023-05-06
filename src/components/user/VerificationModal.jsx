@@ -1,5 +1,5 @@
 import { Button, Modal, Spinner } from "flowbite-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useUserInfo } from "../../hooks/useUserInfo";
 import { getHasRequest, submitIdRequest } from "../../redux/action/userActions";
 import { ValidIdType } from "../../utilities/enums";
@@ -11,6 +11,12 @@ const VerificationModal = ({ show, onClose }) => {
   const [idNumber, setIdNumber] = useState("");
   const [idType, setIdType] = useState(0);
   const [requestInfo, setRequestInfo] = useState();
+
+  const documentBodyRef = useRef(null);
+
+  useEffect(() => {
+    documentBodyRef.current = document.body;
+  }, []);
 
   useEffect(() => {
     const fetch = async () => {
@@ -95,7 +101,11 @@ const VerificationModal = ({ show, onClose }) => {
 
   return (
     <>
-      <Modal show={show} onClose={onClose}>
+      <Modal
+        show={show}
+        onClose={onClose}
+        root={documentBodyRef.current ?? undefined}
+      >
         <Modal.Header>Verification</Modal.Header>
         <Modal.Body>
           <div className="space-y-6">
