@@ -21,6 +21,7 @@ const SubscriptionModal = ({ show, onClose }) => {
           user: {
             ...user,
             userType: "premium",
+            countPost: user.countPost + 10,
           },
           person: {
             ...person,
