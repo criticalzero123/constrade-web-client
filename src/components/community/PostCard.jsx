@@ -33,7 +33,7 @@ const PostCard = ({
                 {post.user.person.firstName} {post.user.person.lastName}{" "}
               </Link>
               {!post.isMember && (
-                <span className="text-gray-300 text-sm">(Removed)</span>
+                <span className="text-gray-300 text-sm">(not-member)</span>
               )}
             </div>
             <p className="text-gray-400 text-sm">

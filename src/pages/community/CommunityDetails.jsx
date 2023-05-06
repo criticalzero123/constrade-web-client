@@ -9,7 +9,10 @@ import CommunityPosts from "../../components/community/CommunityPosts";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { ReportEnum } from "../../utilities/enums";
-import { reportCommunity } from "../../redux/action/communityAction";
+import {
+  removeCommunityMemberById,
+  reportCommunity,
+} from "../../redux/action/communityAction";
 
 const CommunityDetails = () => {
   const { cid } = useParams();
@@ -45,7 +48,7 @@ const CommunityDetails = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const res = await deleteCommunityById(cid, user.userId);
-        console.log(res);
+
         if (res) {
           window.location.href = "/community";
         }
@@ -68,6 +71,30 @@ const CommunityDetails = () => {
       alert("Error in reporting");
     }
   };
+  const handleLeave = async () => {
+    if (data.owner.user.userId !== currentMember.userId) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You want to leave? People here will be sad :( ",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await removeCommunityMemberById(
+            cid,
+            currentMember.communityMemberId
+          );
+
+          if (res) {
+            window.location.href = "/community";
+          }
+        }
+      });
+    }
+  };
 
   return (
     <div className="container px-4 bg-gray-100 ">
@@ -81,12 +108,15 @@ const CommunityDetails = () => {
           <div className="bg-white px-4 py-6 rounded-lg shadow-lg">
             <div className="mb-5">
               {currentMember ? (
-                <div className="border border-[#CC481F] text-center py-2 px-4 text-[#CC481F] font-semibold rounded-lg cursor-pointer w-full ">
+                <button
+                  onClick={handleLeave}
+                  className="border border-[#CC481F] text-center py-2 px-4 text-[#CC481F] font-semibold rounded-lg cursor-pointer w-full "
+                >
                   Joined
-                </div>
+                </button>
               ) : (
                 <div
-                  className="bg-[#CC481F] text-center py-2 px-4 max-w-fit text-white font-semibold rounded-lg cursor-pointer "
+                  className="bg-[#CC481F] text-center py-2 px-4 text-white font-semibold rounded-lg cursor-pointer w-full"
                   onClick={handleJoin}
                 >
                   Join
@@ -107,11 +137,6 @@ const CommunityDetails = () => {
             </div>
             <div className="flex gap-x-2 items-center">
               <p>Owned by:</p>
-              {/* <img
-              src={data.owner.user.imageUrl}
-              alt="owner"
-              className="w-10 h-10 rounded-full"
-            /> */}
               <Link
                 className="text-md hover:text-[#CC481F]"
                 to={`/users/o/${data.owner.user.userId}`}
