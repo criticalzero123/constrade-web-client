@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useWallet } from "../../hooks/wallet/useWallet";
 import { Link } from "react-router-dom";
 import RecentTransactionItem from "../../components/wallet/RecentTransactionItem";
+import ShowWalletModal from "../../components/user/ShowWalletModal";
 const WalletPage = () => {
   const { wallet, transactionsAll } = useWallet();
-
+  const [showWallet, setShowWallet] = useState(false);
   if (wallet === undefined || transactionsAll === undefined)
     return <p>Loading...</p>;
 
@@ -35,13 +36,12 @@ const WalletPage = () => {
             <p className="text-center text-white py-3 ">Send money</p>
           </Link>
 
-          <Link
-            to="/wallet/topup"
-            state={wallet}
+          <button
+            onClick={() => setShowWallet(true)}
             className="border border-[#CC481F] rounded"
           >
             <p className="text-center text-[#CC481F] py-3 ">Top up</p>
-          </Link>
+          </button>
         </div>
         <p className="text-center px-10 text-sm text-gray-500 mt-3">
           Transactions held in our platform are fast and secure.
@@ -59,6 +59,11 @@ const WalletPage = () => {
           </div>
         ))}
       </div>
+      <ShowWalletModal
+        show={showWallet}
+        onClose={() => setShowWallet(false)}
+        wallet={wallet}
+      />
     </div>
   );
 };
