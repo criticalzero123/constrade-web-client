@@ -53,9 +53,8 @@ const ProductAdd = () => {
           ) : (
             <div>
               {shops.map((shop, index) => (
-                <div className="p-4 mb-5 hover:bg-red-500">
+                <div className="p-4 mb-5 hover:bg-red-500" key={index}>
                   <Link
-                    key={index}
                     className=""
                     to={`${shop.name}`}
                     state={{
