@@ -5,11 +5,9 @@ import {
 } from "@stripe/react-stripe-js";
 import React from "react";
 import { topUp } from "../../redux/action/walletActions";
-import { useUserInfo } from "../../hooks/useUserInfo";
 
 const CheckOutForm = ({ state }) => {
   const stripe = useStripe();
-  const { user } = useUserInfo();
   const elements = useElements();
   const handleSubmitPayment = async (e) => {
     e.preventDefault();

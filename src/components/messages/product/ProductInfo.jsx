@@ -178,7 +178,11 @@ const ProductInfo = ({ product, ownerUser, person, isBoosted }) => {
           </Link>
         ) : (
           product && (
-            <Link to={`/products/edit/${product.productId}`} className="w-full">
+            <Link
+              to={`/products/edit/${product.productId}`}
+              state={product}
+              className="w-full"
+            >
               <button
                 type="button"
                 className="mt-5 text-white self-end
